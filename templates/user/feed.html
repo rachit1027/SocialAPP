@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+{% for i in posts %}
+<div class="container" >
+    <div class="card my-4">
+        <div class="card-header">
+          <a href="{{i.user}}">{{i.user}}</a> ,{{i.date}}
+        </div>
+        <div class="card-body">
+          <img src="{{i.image.url}}" style="width: 400px; height: 400px;"/>
+          <p class="card-text">{{i.caption}}</p>
+          <div class="col">
+            <a href="#" class="btn btn-primary">Like</a>
+            <a href="#" class="btn btn-warning">Comment</a>
+            <a href="#" class="btn btn-secondary">Share</a>
+            {% if request.user == i.user %}
+            <a href="{{i.id}}" class="btn btn-danger">Delete</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+</div>
+{% endfor %}
+
+{% block model1 %}
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Post</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <div class="form-floating">
+                        <textarea class="form-control" name="caption" placeholder="Caption" id="floatingTextarea2" style="height: 100px"></textarea>
+                        
+                    </div>
+                 
+                </div>
+                <div class="input-group">
+                    <input type="file" class="form-control" name="image" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                    
+                </div>
+               
+               <a href="home_page"> <button type="submit" class="btn btn-primary">Submit</button></a>
+              </form>
+
+
+
+        </div>
+       
+      </div>
+    </div>
+  </div>
+{%  endblock model1 %}
+{% endblock body %}
